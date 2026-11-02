@@ -1,0 +1,187 @@
+<title>The Feynman Safecracker</title>
+<style>
+  /* Layout: a single reading column; a stamped-red accent reserved for the
+     "open / CLICK" moments and the shear line. Paper in light, ink in dark. */
+  :root{
+    --paper:#ede8dc; --panel:#f6f2e9; --ink:#1c1a15; --ink-2:#55503f;
+    --rule:#cfc7b2; --stamp:#b5321f; --blue:#2a5a86; --good:#2f7d4f;
+    --disp:"Archivo","Arial Narrow",system-ui,sans-serif;
+    --body:"Spectral",Georgia,serif;
+    --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --paper:#15171c; --panel:#1d2026; --ink:#e9e6dd; --ink-2:#a6a192;
+    --rule:#33373f; --stamp:#e0634c; --blue:#7fb0d6; --good:#64b483; color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#15171c; --panel:#1d2026; --ink:#e9e6dd; --ink-2:#a6a192;
+    --rule:#33373f; --stamp:#e0634c; --blue:#7fb0d6; --good:#64b483; color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);
+    line-height:1.6;font-size:1.0625rem;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:46rem;margin:0 auto;padding-inline:20px;padding-block:0}
+  h1,h2,h3{font-family:var(--disp);font-weight:800;line-height:1.08;text-wrap:balance;letter-spacing:-0.01em}
+  h2{font-size:1.7rem;margin:3.2rem 0 0.2rem}
+  h3{font-size:1.18rem;margin:2rem 0 0.1rem;letter-spacing:0}
+  p{margin:0.75rem 0}
+  a{color:var(--stamp)}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-2);margin:0 0 .4rem}
+  .lede{font-size:1.26rem;line-height:1.5;color:var(--ink)}
+  strong{font-weight:700}
+  code{font-family:var(--mono);font-size:.86em;background:color-mix(in srgb,var(--ink) 9%,transparent);
+    padding:.08em .35em;border-radius:3px}
+  figure{margin:1.6rem 0 0.4rem}
+  figure img{display:block;width:100%;border:1px solid var(--rule);border-radius:6px;background:var(--panel)}
+  figcaption{font-family:var(--mono);font-size:.76rem;color:var(--ink-2);margin-top:.5rem;line-height:1.5}
+  .num{font-variant-numeric:tabular-nums}
+
+  /* header */
+  header.masthead{border-bottom:3px double var(--rule);margin-top:1.4rem;padding-bottom:1.3rem}
+  .stamp{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--stamp);border:1.5px solid var(--stamp);border-radius:3px;padding:.2em .55em;transform:rotate(-1.5deg)}
+  h1{font-size:clamp(2.3rem,8vw,3.6rem);margin:.7rem 0 .3rem}
+  .byline{font-family:var(--mono);font-size:.78rem;color:var(--ink-2);letter-spacing:.04em}
+
+  /* the big number table */
+  .maths{border:1px solid var(--rule);border-radius:8px;background:var(--panel);
+    margin:1.6rem 0;padding:1.1rem 1.2rem}
+  .maths table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  .maths td{padding:.42rem 0;border-bottom:1px solid var(--rule);vertical-align:baseline}
+  .maths tr:last-child td{border-bottom:0}
+  .maths td:first-child{font-family:var(--body)}
+  .maths td:last-child{text-align:right;font-family:var(--mono);font-size:1.02rem;white-space:nowrap;padding-left:1rem}
+  .maths .hi td:last-child{color:var(--stamp);font-weight:600}
+  .maths .hi2 td:last-child{color:var(--good);font-weight:600}
+
+  /* pull quote */
+  blockquote{margin:1.6rem 0;padding-left:1.1rem;border-left:3px solid var(--stamp);
+    font-size:1.18rem;line-height:1.5;color:var(--ink)}
+  blockquote cite{display:block;font-family:var(--mono);font-size:.74rem;font-style:normal;
+    color:var(--ink-2);margin-top:.5rem;letter-spacing:.04em}
+
+  /* code block */
+  pre{font-family:var(--mono);font-size:.8rem;line-height:1.55;background:var(--panel);
+    border:1px solid var(--rule);border-radius:6px;padding:.95rem 1.05rem;overflow-x:auto;margin:1.1rem 0}
+  pre .k{color:var(--blue);font-weight:600}
+  pre .c{color:var(--ink-2);font-style:italic}
+  pre .s{color:var(--good)}
+
+  /* trick cards */
+  .tricks{display:grid;gap:1rem;margin:1.4rem 0}
+  .trick{border:1px solid var(--rule);border-radius:8px;background:var(--panel);padding:1rem 1.15rem}
+  .trick .tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--stamp)}
+  .trick h3{margin:.25rem 0 .35rem}
+  .trick p{margin:.35rem 0 0;font-size:.98rem}
+
+  .files{font-family:var(--mono);font-size:.82rem;background:var(--panel);border:1px solid var(--rule);
+    border-radius:6px;padding:1rem 1.15rem;overflow-x:auto}
+  .files b{color:var(--stamp);font-weight:600}
+  hr.end{border:0;border-top:3px double var(--rule);margin:3rem 0 1rem}
+  .foot{font-family:var(--mono);font-size:.75rem;color:var(--ink-2);line-height:1.6;margin-bottom:2.5rem}
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Spectral:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<div class="wrap">
+
+  <header class="masthead">
+    <span class="stamp">Declassified · Los Alamos · 1943–46</span>
+    <h1>The Feynman Safecracker</h1>
+    <p class="byline">A SQL Server 2025 reconstruction of how a physicist beat a million combinations — and the lock that came after</p>
+  </header>
+
+  <p class="lede">Richard Feynman cracked the safes holding the secrets of the atomic bomb. Not with a drill or a stethoscope, but with arithmetic: he noticed the locks were <em>sloppy</em>, and that slop leaked information. This is that process, rebuilt inside a database — every wheel, bolt and pin modelled as geometry, every attempt logged, so you can watch the maths do the work.</p>
+
+  <h2>The thing he actually spotted</h2>
+  <p>The filing cabinets at Los Alamos used Mosler combination locks: three numbers, 0–99, turned left-right-left. Nominally a million combinations. But Feynman took his own lock apart and measured the slop. A number would still open the safe if you were <strong>off by two in either direction</strong>. So you never had to try every number — only every fifth one: 0, 5, 10, 15… Twenty values per wheel.</p>
+
+  <div class="maths">
+    <table>
+      <tr><td>Try every single number</td><td class="num">100 × 100 × 100 = 1,000,000</td></tr>
+      <tr class="hi"><td>Only multiples of five (±2 slop)</td><td class="num">20 × 20 × 20 = 8,000</td></tr>
+      <tr><td>Worst case, at his practised rhythm</td><td class="num">≈ 8 hours</td></tr>
+      <tr class="hi2"><td>With the last two numbers already known</td><td class="num">20 tries · minutes</td></tr>
+    </table>
+  </div>
+
+  <p>That last row is the real trick, and it's where it stops being honest arithmetic and starts being mischief.</p>
+
+  <h2>Taking the last two numbers off</h2>
+  <p>When someone leaves a drawer open with the dial resting on ten, the bolt is still sitting down in the slot — which means the three wheels are still lined up. Feynman would lean on an open filing cabinet mid-conversation and <em>wobble the dial</em>. Step away from ten in fives; each time, back to ten. The moment the bolt won't drop back, the slot has been disturbed — and the step <em>before</em> that was the last number. Do it again the other way for the second number. He wrote them on a scrap of paper hidden inside his own lock.</p>
+
+  <figure>
+    <img src="dial_christy.gif" alt="Animation: the dial, the three-wheel pack, and the backend probe log reading the last two numbers off Christy's open cabinet">
+    <figcaption>Christy's cabinet, left open. The database wobbles the dial (<code>dial.usp_TakeLastTwo</code>), logging every step to <code>dial.Probe</code>. When the bolt "STAYS" up at 65, the last number is fixed at 60; the second comes out 35 — "Christy — 35, 60," exactly as in the book. After that, opening it cold means trying only twenty first numbers.</figcaption>
+  </figure>
+
+  <blockquote>
+    You could be off by two in either direction. With twenty such numbers on a wheel of 100, that was 8000 possibilities instead of the 1,000,000 you would get if you had to try every single number.
+    <cite>Richard Feynman — “Safecracker Meets Safecracker”, Surely You're Joking, Mr. Feynman! (1985)</cite>
+  </blockquote>
+
+  <h2>Three tricks people blur together</h2>
+  <div class="tricks">
+    <div class="trick"><span class="tag">The maths</span><h3>Tolerance</h3>
+      <p>The mechanism's ±2 slop collapses a million to 8,000. Honest, and his own discovery.</p></div>
+    <div class="trick"><span class="tag">The cheat</span><h3>The open drawer</h3>
+      <p>Read the last two numbers off any cabinet left open, then "open it cold" in minutes — twenty first numbers while reading a magazine so it didn't look too easy.</p></div>
+    <div class="trick"><span class="tag">The shortcuts</span><h3>Psychology &amp; factory</h3>
+      <p>De Hoffmann's bomb-secret cabinets opened on <strong>27-18-28</strong> — the digits of <em>e</em>. Kerst's on <strong>0-5-35</strong>, a daughter's birthday. And half the safes were never changed from the factory <strong>25-0-25</strong> or <strong>50-25-50</strong>.</p></div>
+  </div>
+
+  <h2>Modelling it as geometry</h2>
+  <p>In the database nothing is faked with arithmetic. Each wheel, at each of its 100 positions, is a real <code>geometry</code> disc with a gate notch cut into its rim. The bolt is a small bar above each wheel. The entire physics of the lock reduces to one spatial question, asked once and stored:</p>
+
+  <pre><span class="c">-- does the bolt clear this wheel at this dial position?</span>
+<span class="k">UPDATE</span> wg <span class="k">SET</span> Clear = <span class="k">CASE WHEN</span> wg.Geom.<span class="k">STIntersects</span>(b.Geom) = 1
+                           <span class="k">THEN</span> 0 <span class="k">ELSE</span> 1 <span class="k">END</span>
+<span class="k">FROM</span> dial.WheelGeom wg <span class="k">JOIN</span> dial.Bolt b <span class="k">ON</span> b.CabinetId = wg.CabinetId;</pre>
+
+  <p>Once every position knows whether its gate sits under the bolt, cracking the safe is a pure relational search: find the first candidate combination whose three wheels are <em>all</em> clear. The slop falls out of the geometry automatically — a gate cut wide enough leaves exactly five clear dial positions, which <em>is</em> the ±2.</p>
+
+  <h3>Feynman space</h3>
+  <p>Every attempt is logged to <code>dial.Attempt</code> with a running clock, and each try also carves out a 5×5 patch of the search space it has ruled out — twenty first-number bands, each a 100×100 grid of the second and third numbers. You can watch the 8,000 shrink.</p>
+
+  <figure>
+    <img src="dial_unknown.gif" alt="Animation: cracking a cabinet with no clues — the dial turning, the wheel pack, and the Feynman-space grid filling in as attempts are logged">
+    <figcaption>A cabinet with no clues at all: the full 8,000 (<code>dial.usp_Crack … @Strategy='Feynman8000'</code>). Left, the mechanism; right, "Feynman space" filling in blue as <code>dial.Attempt</code> logs each try. The bolt drops the instant all three gates line up.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="scoreboard.png" alt="Bar chart comparing how long each safe took, from the Captain's factory setting at forty seconds to brute force at eighteen hours">
+    <figcaption>Every episode, timed at his own rhythm. The Captain's factory-set safe: forty seconds. Brute force without the tolerance trick: off the chart. The methods, not the muscle, are the whole story.</figcaption>
+  </figure>
+
+  <h2>The lock that came after — keys and picking</h2>
+  <p>Feynman learned to pick ordinary pin-tumbler locks from a man named Leo Lavatelli, and his description of it is the same insight as the dial: a real lock isn't made perfectly, so <em>one pin holds more of the load than the others</em>. Lift that one to the right height, the plug gives a hair, the pin catches on the edge — and the load moves to the next pin. Push too far and the springs drop everything back: <em>tic-tic-tic</em>. Sisyphus.</p>
+  <p>So the second half of the lab is a see-through practice lock, the kind sold as a transparent teaching kit, built entirely from geometry. A key's cuts are a profile; each pin rides it; the plug turns only if every gap lands on the shear line.</p>
+
+  <figure>
+    <img src="pin_key_nextdoor.gif" alt="Animation: a near-miss key inserted into the transparent lock; four pins reach the shear line but the fifth is cut too deep and blocks">
+    <figcaption>The right key lifts every pin so the gap between key pin and driver sits exactly on the red shear line. Next door's key is cut one step too deep on pin 4 — its driver crosses the line and the plug won't turn. The database decides this with <code>STIntersects</code> against the shear-line, chamber by chamber.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="pin_pick.gif" alt="Animation: single-pin picking the transparent lock — the pick lifting each binding pin to the shear line, with an overset that drops everything and restarts">
+    <figcaption>Single-pin picking (<code>pin.usp_Pick</code>): tension on, find the binding pin, lift until it sets with a click, move to the next. Overshoot at the shear line and it oversets — tension off, every pin drops, start again. Exactly Feynman's "Sisyphus."</figcaption>
+  </figure>
+
+  <p>And because the pick records how high each pin had to go, the database can read the bitting straight back off a successful pick and <strong>cut a working key</strong> — the pin-tumbler version of taking the last two numbers off.</p>
+
+  <h2>What's in the package</h2>
+  <p>Four T-SQL scripts build the whole thing on a SQL Server 2025 instance; a Python front end draws it, either from the live database (geometry crosses the wire as WKT and is drawn exactly as the database computed it) or from a built-in simulator that reproduces every episode, so the visuals run with no server at all.</p>
+
+  <div class="files">
+    <b>sql/</b>01_schema · 02_geometry · 03_dial · 04_pin_tumbler · 05_demo<br>
+    <b>python/</b>dial_viz.py · pin_viz.py · feynman_lab/ <span style="color:var(--ink-2)">(geometry mirror, simulators, SQL driver)</span><br>
+    <b>out/</b>pre-rendered animations + the scoreboard
+  </div>
+
+  <p style="margin-top:1.2rem">Run <code>05_demo.sql</code> in SSMS with the <em>Spatial results</em> tab on to see the wheel pack, Feynman space and the see-through lock; or <code>python dial_viz.py --source sql --live</code> to watch <code>dial.usp_Crack</code> write rows in real time.</p>
+
+  <hr class="end">
+  <p class="foot">Source: “Safecracker Meets Safecracker,” from Surely You're Joking, Mr. Feynman! (1985). The combinations shown — de Hoffmann's 27-18-28, Kerst's 0-5-35, the factory 25-0-25 / 50-25-50, Christy's 35-60 — are the ones Feynman records. First-number values and a few cabinets are invented to fill out the set; the mechanics are his.</p>
+
+</div>
